@@ -1,4 +1,4 @@
-local duration = 0
+local duration = 0.1
 local speed = 0.05
 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
 task.spawn(function()
@@ -146,8 +146,10 @@ end
 end)
 
 task.spawn(function()
-while task.wait(1) do
-    workspace.CurrentCamera.CFrame = CFrame.new(hrp.Position + hrp.CFrame.UpVector*10) * CFrame.Angles(math.rad(-90),0,0)
+for _,v in pairs(workspace.Map:GetDescendants()) do
+    if v:IsA("BasePart") then
+        v.Transparency = 0.5
+    end
 end
 end)
 
