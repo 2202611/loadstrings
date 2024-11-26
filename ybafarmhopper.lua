@@ -264,13 +264,13 @@ while boolean do
 					local proxPrompt = v.ProximityPrompt
                     proxPrompt.HoldDuration = duration
                     local attempts = 0
-					while attempts < 2 do
+					while attempts < 1 do
 						local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
                         if (item.Position - plr.Position).Magnitude > 5 then
 						travelTo(item)
                         else
 							--maxItems()
-                            for i = 1,2 do
+                            for i = 1,1 do
                             attempts += 1
                             for _,p in pairs(v:GetChildren()) do
                                 if p:IsA("ProximityPrompt") then
