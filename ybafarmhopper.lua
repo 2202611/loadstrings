@@ -270,7 +270,7 @@ while boolean do
 						travelTo(item)
                         else
 							--maxItems()
-                            for i = 1,1 do
+                            for i = 1,2 do
                             attempts += 1
                             for _,p in pairs(v:GetChildren()) do
                                 if p:IsA("ProximityPrompt") then
@@ -278,11 +278,14 @@ while boolean do
                                 end
                             end
                             TextLabel.Text = "picking up and selling item.."
-                            task.wait(0.3)
+                            task.wait(0.2)
                         end
 						end
 						task.wait(0.05)
 					end
+                    if v and v:FindFirstChild("ProximityPrompt") then
+                        v:Destroy()
+                    end
 					--maxItems()
 				end
 			end
