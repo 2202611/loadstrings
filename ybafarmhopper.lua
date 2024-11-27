@@ -279,7 +279,7 @@ while boolean do
                             end
                             TextLabel.Text = "picking up and selling item.."
                             task.wait(0.4)
-			                if p and not p:IsDescendantOf(workspace) then
+			                if not p then
                                 break
                             end
                         end
