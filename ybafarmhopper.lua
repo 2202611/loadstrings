@@ -274,11 +274,14 @@ while boolean do
                             attempts += 1
                             for _,p in pairs(v:GetChildren()) do
                                 if p:IsA("ProximityPrompt") then
-							     fireproximityprompt(p,2)
+				                   fireproximityprompt(p,2)
                                 end
                             end
                             TextLabel.Text = "picking up and selling item.."
-                            task.wait(0.2)
+                            task.wait(0.4)
+			                if not p:IsDescendantOf(workspace) then
+                                break
+                            end
                         end
 						end
 						task.wait(0.05)
