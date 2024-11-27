@@ -281,6 +281,8 @@ while boolean do
                             task.wait(0.4)
 			                if not p then
                                 break
+                            elseif p then
+                                task.wait(0.4)
                             end
                         end
 						end
@@ -289,6 +291,7 @@ while boolean do
                     if v and v:FindFirstChild("ProximityPrompt") then
                         v:Destroy()
                     end
+                    busy = false
 					--maxItems()
 				end
 			end
