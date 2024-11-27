@@ -295,6 +295,7 @@ while boolean do
 					--maxItems()
 				end
 			end
+            busy = false
             end
     end
 --end
