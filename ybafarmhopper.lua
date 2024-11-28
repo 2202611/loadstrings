@@ -40,7 +40,6 @@ items = {
     ["Ancient Scroll"] = 0,
     ["Dio's Diary"] = 0,
     ["Pure Rokakaka"] = 0,
-    ["Lucky Stone Mask"] = 0,
     ["Gold Umbrella"] = 0,
     ["Casual MBR Money 1"] = 0,
     ["Casual MBR Money 2"] = 0,
