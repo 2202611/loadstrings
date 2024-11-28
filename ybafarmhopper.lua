@@ -215,17 +215,6 @@ while boolean do
         end
     end
     TextLabel.Text = "ITEMS SPAWNED: "..#workspace.Item_Spawns.Items:GetChildren()
-    if #workspace.Item_Spawns.Items:GetChildren() == 0 then
-        TextLabel.Text = "Hiding.. ITEMS SPAWNED: "..#workspace.Item_Spawns.Items:GetChildren()
-        local location = workspace.Locations["Naples' Sewers"]
-        while true do
-            travelTo(location.CFrame)
-            if (location.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 20 then
-                break
-            end
-            task.wait(0.05)
-        end
-    end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
