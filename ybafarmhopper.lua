@@ -209,9 +209,9 @@ while boolean do
     print(time)
     if busy == false then
     busy = true
-    task.delay(3,function()
-        busy = false
-    end)
+    --task.delay(3,function()
+    --    busy = false
+    --end)
     for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.CanCollide = false
@@ -219,6 +219,12 @@ while boolean do
         end
     end
     TextLabel.Text = "ITEMS SPAWNED: "..#workspace.Item_Spawns.Items:GetChildren()
+    if #workspace.Item_Spawns.Items:GetChildren() == 0 then
+        while #workspace.Item_Spawns.Items:GetChildren() == 0 do
+            travelTo(workspace.Locations:GetChildren()[math.random(1,#workspace.Locations:GetChildren())])
+            task.wait(0.4)
+        end
+    end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
