@@ -123,17 +123,6 @@ TextLabel.TextWrapped = true
 
 UICorner.Parent = TextLabel
 
-function maxItems()
-    for _, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-        if items[item.Name] then
-            items[item.Name] = items[item.Name] + 1
-            if (items[item.Name] >= (maxLimits[item.Name] or 25)) then
-            sellItem(item)
-            end
-        end
-    end
-end
-
 function sellItem(item)
     local plrName = game.Players.LocalPlayer.Name
     local itemName = game.Players.LocalPlayer.Backpack:FindFirstChild(item.Name)
