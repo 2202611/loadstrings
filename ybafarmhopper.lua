@@ -40,8 +40,13 @@ items = {
     ["Ancient Scroll"] = 0,
     ["Dio's Diary"] = 0,
     ["Pure Rokakaka"] = 0,
-    ["Lucky Stone Mask"] = 0,
     ["Gold Umbrella"] = 0,
+    ["Casual MBR Money 1"] = 0,
+    ["Casual MBR Money 2"] = 0,
+    ["Casual MBR Money 3"] = 0,
+    ["Comp MBR Money 1"] = 0,
+    ["Comp MBR Money 2"] = 0,
+    ["Comp MBR Money 3"] = 0,
     --["Yellow Candy"] = 0,
     --["Green Candy"] = 0,
     --["Red Candy"] = 0,
@@ -123,17 +128,6 @@ TextLabel.TextWrapped = true
 
 UICorner.Parent = TextLabel
 
-function maxItems()
-    for _, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-        if items[item.Name] then
-            items[item.Name] = items[item.Name] + 1
-            if (items[item.Name] >= (maxLimits[item.Name] or 25)) then
-            sellItem(item)
-            end
-        end
-    end
-end
-
 function sellItem(item)
     local plrName = game.Players.LocalPlayer.Name
     local itemName = game.Players.LocalPlayer.Backpack:FindFirstChild(item.Name)
@@ -211,8 +205,8 @@ end)
 
 function start()
 while boolean do
-    task.wait(.5)
-	time += .5
+    task.wait(.05)
+	time += .05
     print(time)
     if busy == false then
     busy = true
@@ -226,16 +220,6 @@ while boolean do
         end
     end
     TextLabel.Text = "ITEMS SPAWNED: "..#workspace.Item_Spawns.Items:GetChildren()
-    if #workspace.Item_Spawns.Items:GetChildren() == 0 then
-        TextLabel.Text = "Hiding..: "..#workspace.Item_Spawns.Items:GetChildren()
-        while true do
-            travelTo(workspace.Locations["Naples' Sewers"].CFrame)
-            if (workspace.Locations["Naples' Sewers"].Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 5 then
-                break
-            end
-            task.wait(0.05)
-        end
-    end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
@@ -274,11 +258,16 @@ while boolean do
                             attempts += 1
                             for _,p in pairs(v:GetChildren()) do
                                 if p:IsA("ProximityPrompt") then
-							     fireproximityprompt(p,2)
+				                   fireproximityprompt(p,2)
                                 end
                             end
                             TextLabel.Text = "picking up and selling item.."
-                            task.wait(0.2)
+                            task.wait(0.4)
+			                if not p then
+                                break
+                            elseif p then
+                                task.wait(0.4)
+                            end
                         end
 						end
 						task.wait(0.05)
@@ -287,9 +276,11 @@ while boolean do
                         v:Destroy()
                     end
                     task.wait(0.2)
+                    busy = false
 					--maxItems()
 				end
 			end
+            busy = false
             end
     end
 --end
