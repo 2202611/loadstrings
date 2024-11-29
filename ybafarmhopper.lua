@@ -23,7 +23,7 @@ local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
 ---
 
-items = {
+local items = {
     ["Mysterious Arrow"] = 0,
     ["Rokakaka"] = 0,
     ["Gold Coin"] = 0,
@@ -84,7 +84,9 @@ repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingSc
 game.Players.LocalPlayer.PlayerStats.Prestige.Value = "0"
 
 task.spawn(function()
-for i, v in next, {"MouseButton1Click", "MouseButton1Down", "Activated"} do firesignal(game.Players.LocalPlayer.PlayerGui:WaitForChild("LoadingScreen").Play[v]) end
+for i,v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui:WaitForChild("LoadingScreen").Frames.Main.Play.Play.MouseButton1Down)) do
+v:Fire()
+end
 end)
 
 -- Gui to Lua
@@ -221,7 +223,7 @@ while boolean do
     if #workspace.Item_Spawns.Items:GetChildren() == 0 then
         while #workspace.Item_Spawns.Items:GetChildren() == 0 do
             travelTo(workspace.Locations:GetChildren()[math.random(1,#workspace.Locations:GetChildren())])
-            task.wait(0.05)
+            task.wait(0.3)
         end
     end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
