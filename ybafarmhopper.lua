@@ -223,7 +223,7 @@ while boolean do
     if #workspace.Item_Spawns.Items:GetChildren() == 0 then
         while #workspace.Item_Spawns.Items:GetChildren() == 0 do
             travelTo(workspace.Locations:GetChildren()[math.random(1,#workspace.Locations:GetChildren())])
-            task.wait(0.5)
+            task.wait(0.05)
         end
     end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
