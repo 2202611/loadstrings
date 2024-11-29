@@ -28,7 +28,6 @@ items = {
     ["Rokakaka"] = 0,
     ["Gold Coin"] = 0,
     ["Diamond"] = 0,
-    ["Pure Rokakaka"] = 0,
     ["Quinton's Glove"] = 0,
     ["Steel Ball"] = 0,
     ["Rib Cage of The Saint's Corpse"] = 0,
@@ -69,7 +68,6 @@ local maxLimits = {  -- Add to the list if I missed an item
     ["Stone Mask"] = 10,
     ["Ancient Scroll"] = 10,
     ["Dio's Diary"] = 10,
-    ["Pure Rokakaka"] = 999,
     ["Lucky Stone Mask"] = 999,
     ["Lucky Arrow"] = 999,
     ["Gold Umbrella"] = 999,
@@ -262,16 +260,18 @@ while boolean do
 							--maxItems()
                             for i = 1,2 do
                             attempts += 1
+                            local prompt
                             for _,p in pairs(v:GetChildren()) do
                                 if p:IsA("ProximityPrompt") then
+                                   prompt = p
 				                   fireproximityprompt(p,2)
                                 end
                             end
                             TextLabel.Text = "picking up and selling item.."
                             task.wait(0.4)
-			                if not p then
+			                if not prompt then
                                 break
-                            elseif p then
+                            elseif prompt then
                                 task.wait(0.4)
                             end
                         end
