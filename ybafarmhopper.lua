@@ -194,6 +194,7 @@ task.spawn(function()
 for _,v in pairs(workspace.Map:GetDescendants()) do
     if v:IsA("BasePart") then
         v.Transparency = 0.5
+        v.CanCollide = false
     end
 end
 for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
@@ -204,6 +205,10 @@ end
 end)
 
 function start()
+local bv = Instance.new("BodyVelocity")
+bv.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+bv.Velocity = Vector3.new(0,-0.1,0)
+bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 while boolean do
     task.wait(.05)
 	time += .05
@@ -213,6 +218,10 @@ while boolean do
     task.delay(3,function()
         busy = false
     end)
+    local bv = Instance.new("BodyVelocity")
+    bv.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+    bv.Velocity = Vector3.new(0,-0.01,0)
+    bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
     for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.CanCollide = false
