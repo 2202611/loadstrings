@@ -169,7 +169,7 @@ local function travelTo(place,cframe) -- Does the math and teleports you in chun
     if cframe then
         vector = place - plr.Position
     end
-    if place then
+    if place and not cframe then
     vector = place.Position - plr.Position
     end
 
@@ -205,20 +205,20 @@ end
 end)
 
 function start()
-local bv = Instance.new("BodyVelocity")
+bv = Instance.new("BodyVelocity")
 bv.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
 bv.Velocity = Vector3.new(0,-0.1,0)
 bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 while boolean do
-    task.wait(.05)
-	time += .05
+    task.wait(.01)
+	time += .01
     print(time)
     if busy == false then
     busy = true
     task.delay(3,function()
         busy = false
     end)
-    local bv = Instance.new("BodyVelocity")
+    bv = Instance.new("BodyVelocity")
     bv.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
     bv.Velocity = Vector3.new(0,-0.01,0)
     bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -230,10 +230,11 @@ while boolean do
     end
     TextLabel.Text = "ITEMS SPAWNED: "..#workspace.Item_Spawns.Items:GetChildren()
     if #workspace.Item_Spawns.Items:GetChildren() == 0 then
-        while #workspace.Item_Spawns.Items:GetChildren() == 0 do
-            travelTo(workspace.Locations:GetChildren()[math.random(1,#workspace.Locations:GetChildren())])
-            task.wait(0.3)
-        end
+       -- while #workspace.Item_Spawns.Items:GetChildren() == 0 do
+            travelTo(workspace.Dialogues:GetChildren()[math.random(1,#workspace.Dialogues:GetChildren())].TalkBox.Position + Vector3.new(0,-50,0),true)
+            task.wait(0.05)
+         --   print(#workspace.Item_Spawns.Items:GetChildren())
+        --end
     end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
@@ -265,11 +266,12 @@ while boolean do
                     local attempts = 0
 					while attempts < 1 do
 						local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
-                        if (item.Position - plr.Position).Magnitude > 5 then
-						travelTo(item)
+                        if (item.Position - plr.Position).Magnitude > 20 then
+						travelTo(item.Position + Vector3.new(0,-7.5,0),true)
                         else
+                            task.wait(0.1)
 							--maxItems()
-                            for i = 1,2 do
+                            for i = 1,1 do
                             attempts += 1
                             local prompt
                             for _,p in pairs(v:GetChildren()) do
@@ -279,20 +281,19 @@ while boolean do
                                 end
                             end
                             TextLabel.Text = "picking up and selling item.."
-                            task.wait(0.4)
+                            --task.wait(0.1)
 			                if not prompt then
                                 break
                             elseif prompt then
-                                task.wait(0.4)
+                                task.wait(0.1)
                             end
                         end
 						end
-						task.wait(0.05)
+						task.wait(0.01)
 					end
                     if v and v:FindFirstChild("ProximityPrompt") then
                         v:Destroy()
                     end
-                    task.wait(0.2)
                     busy = false
 					--maxItems()
 				end
@@ -333,13 +334,45 @@ TextButton5.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton5.TextSize = 14.000
 
 -- Scripts:
-
+local toggled = true
 local function BKOLUE_fake_script() -- TextButton.LocalScript 
 	local script = Instance.new('LocalScript', TextButton5)
 	
 	script.Parent.MouseButton1Down:Connect(function()
 		boolean = not boolean
 		script.Parent.Text = tostring(boolean)
+        if boolean == false then
+            task.spawn(function()
+                for _,v in pairs(workspace.Map:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.Transparency = 0
+                        v.CanCollide = true
+                    end
+                end
+                for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = true
+                    end
+                end
+                if bv then
+                    bv:Destroy()
+                end
+            end)
+        elseif boolean == true then
+            task.spawn(function()
+                for _,v in pairs(workspace.Map:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.Transparency = 0.5
+                        v.CanCollide = false
+                    end
+                end
+                for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end
+                end)
+        end
         start()
 	end)
 end
@@ -354,4 +387,110 @@ game.Players.PlayerRemoving:Connect(function(plr)
       game:GetService('TeleportService'):Teleport(game.PlaceId)
       coroutine.yield(wrap)
     end
+end)
+
+local HttpService = game:GetService("HttpService")
+function vtype(o, t)
+    if o == nil then return false end
+    if type(o) == "userdata" then return typeof(o) == t end
+    return type(o) == t
+end
+
+local writefile = type(writefile) == "function" and function(file, data, safe)
+    if safe == true then return pcall(writefile, file, data) end
+    writefile(file, data)
+end
+
+local readfile = type(readfile) == "function" and function(file, safe)
+    if safe == true then return pcall(readfile, file) end
+    return readfile(file)
+end
+
+function writefileExploit()
+	if writefile then
+		return true
+	end
+end
+
+function readfileExploit()
+	if readfile then
+		return true
+	end
+end
+
+defaultsettings = {
+}
+
+queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+
+defaults = HttpService:JSONEncode(defaultsettings)
+
+local loadedEventData = nil
+local jsonAttempts = 0
+function saves()
+    if writefileExploit() and readfileExploit() and jsonAttempts < 10 then
+        local readSuccess, out = readfile("IY_FE.iy", true)
+        if readSuccess then
+            if out ~= nil and tostring(out):gsub("%s", "") ~= "" then
+                local success, response = pcall(function()
+                    local json = HttpService:JSONDecode(out)
+                end)
+                if not success then
+                    jsonAttempts = jsonAttempts + 1
+                    warn("Save Json Error:", response)
+                    warn("Overwriting Save File")
+                    writefile("IY_FE.iy", defaults, true)
+                    wait()
+                    saves()
+                end
+            else
+                writefile("IY_FE.iy", defaults, true)
+                wait()
+                local dReadSuccess, dOut = readfile("IY_FE.iy", true)
+                if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
+                    saves()
+                else
+                    nosaves = true
+                    game:GetService("StarterGui"):SetCore("SendNotification",{
+                        Title = "Error!", -- Required
+                        Text = "failed to save script", -- Required
+                    })
+                end
+            end
+        else
+            writefile("IY_FE.iy", defaults, true)
+            wait()
+            local dReadSuccess, dOut = readfile("IY_FE.iy", true)
+            if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
+                saves()
+            else
+                nosaves = true
+                game:GetService("StarterGui"):SetCore("SendNotification",{
+                    Title = "Error!", -- Required
+                    Text = "failed to save script", -- Required
+                }) 
+           end
+        end
+    else
+        if jsonAttempts >= 10 then
+            nosaves = true
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "Error!", -- Required
+                Text = "failed to save script", -- Required
+            })
+            else
+            nosaves = true
+        end
+    end
+end
+
+saves()
+
+
+local TeleportCheck = false
+game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+	if (not TeleportCheck) and queueteleport then
+		TeleportCheck = true
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
+	end
 end)
