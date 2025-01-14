@@ -404,8 +404,7 @@ while boolean do
                         else
                             for i = 1,10 do
                             task.wait(0.1)
-                            if (item.Position - plr.Position).Magnitude > 20 then
-                                task.wait(0.1)
+                            if (item.Position - plr.Position).Magnitude < 15 then
                                 break
                             end
                         end
