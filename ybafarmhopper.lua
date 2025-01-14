@@ -8,14 +8,6 @@ local speed = 0.05
 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
 local hop = true
 
-task.spawn(function()
-    while true do
-    wait()
-    if not hrp then
-        hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-    end
-end
-end)
 local autosell = true
 local busy = false
 local time = 1
