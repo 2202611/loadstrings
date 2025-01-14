@@ -400,7 +400,7 @@ while boolean do
 					while attempts < 1 do
 						local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
                         if (item.Position - plr.Position).Magnitude > 20 then
-						travelTo(item.Position + Vector3.new(0,-7.7,0),true)
+						travelTo(item.Position + Vector3.new(0,-7.2,0),true)
                         else
                             for i = 1,10 do
                             task.wait(0.1)
