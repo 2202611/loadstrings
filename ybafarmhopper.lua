@@ -179,11 +179,11 @@ saves()
 
 
 local TeleportCheck = false
-queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
 game.Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if (not TeleportCheck) and queueteleport and State == Enum.TeleportState.Started then
+	if (not TeleportCheck) and queue_on_teleport and State == Enum.TeleportState.Started then
 		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
+        print("TP")
+		queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
 	end
 end)
 
@@ -427,7 +427,7 @@ while boolean do
                             elseif prompt then
                                 task.wait(0.1)
                                 if prompt then
-                                for i = 1,10 do
+                                for i = 1,0.5 do
                                    task.wait(0.1)
                                    if not prompt then
                                     break
