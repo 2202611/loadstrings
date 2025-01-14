@@ -80,14 +80,149 @@ local maxLimits = {  -- Add to the list if I missed an item
     --["Blue Candy"] = 999,
 }
 
-repeat wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") == nil
+local HttpService = game:GetService("HttpService")
+function vtype(o, t)
+    if o == nil then return false end
+    if type(o) == "userdata" then return typeof(o) == t end
+    return type(o) == t
+end
+
+local writefile = type(writefile) == "function" and function(file, data, safe)
+    if safe == true then return pcall(writefile, file, data) end
+    writefile(file, data)
+end
+
+local readfile = type(readfile) == "function" and function(file, safe)
+    if safe == true then return pcall(readfile, file) end
+    return readfile(file)
+end
+
+function writefileExploit()
+	if writefile then
+		return true
+	end
+end
+
+function readfileExploit()
+	if readfile then
+		return true
+	end
+end
+
+defaultsettings = {
+}
+
+queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+
+defaults = HttpService:JSONEncode(defaultsettings)
+
+local loadedEventData = nil
+local jsonAttempts = 0
+function saves()
+    if writefileExploit() and readfileExploit() and jsonAttempts < 10 then
+        local readSuccess, out = readfile("IY_FE.iy", true)
+        if readSuccess then
+            if out ~= nil and tostring(out):gsub("%s", "") ~= "" then
+                local success, response = pcall(function()
+                    local json = HttpService:JSONDecode(out)
+                end)
+                if not success then
+                    jsonAttempts = jsonAttempts + 1
+                    warn("Save Json Error:", response)
+                    warn("Overwriting Save File")
+                    writefile("IY_FE.iy", defaults, true)
+                    wait()
+                    saves()
+                end
+            else
+                writefile("IY_FE.iy", defaults, true)
+                wait()
+                local dReadSuccess, dOut = readfile("IY_FE.iy", true)
+                if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
+                    saves()
+                else
+                    nosaves = true
+                    game:GetService("StarterGui"):SetCore("SendNotification",{
+                        Title = "Error!", -- Required
+                        Text = "failed to save script", -- Required
+                    })
+                end
+            end
+        else
+            writefile("IY_FE.iy", defaults, true)
+            wait()
+            local dReadSuccess, dOut = readfile("IY_FE.iy", true)
+            if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
+                saves()
+            else
+                nosaves = true
+                game:GetService("StarterGui"):SetCore("SendNotification",{
+                    Title = "Error!", -- Required
+                    Text = "failed to save script", -- Required
+                }) 
+           end
+        end
+    else
+        if jsonAttempts >= 10 then
+            nosaves = true
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "Error!", -- Required
+                Text = "failed to save script", -- Required
+            })
+            else
+            nosaves = true
+        end
+    end
+end
+
+saves()
+
+
+local TeleportCheck = false
+game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+	if (not TeleportCheck) and queueteleport then
+		TeleportCheck = true
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
+	end
+end)
+
+local _place,_id = game.PlaceId, game.JobId
+
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=10"
+function ListServers(cursor)
+   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+   return Http:JSONDecode(Raw)
+end
+
+local waittime = 0
+while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") do
+    task.wait(1)
+    waittime += 1
+    if waittime >= 15 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+        local Servers = ListServers()
+        local Server = Servers.data[math.random(1,#Servers.data)]
+        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+        break
+    end
+end
+
+local waittime2 = 0
+while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
+    task.wait(1)
+    waittime2 += 1
+    if waittime2 >= 15 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+        local Servers = ListServers()
+        local Server = Servers.data[math.random(1,#Servers.data)]
+        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+        break
+    end
+end
+
 game.Players.LocalPlayer.PlayerStats.Prestige.Value = "0"
 
-task.spawn(function()
-for i,v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui:WaitForChild("LoadingScreen").Frames.Main.Play.Play.MouseButton1Down)) do
-v:Fire()
-end
-end)
+
 
 -- Gui to Lua
 -- Version: 3.3
@@ -155,13 +290,6 @@ function sellItem(item)
     game:GetService("Players").LocalPlayer.Character.RemoteEvent:FireServer(unpack(args))
 end
 
-local _place,_id = game.PlaceId, game.JobId
-
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=10"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
-end
 
 local function travelTo(place,cframe) -- Does the math and teleports you in chunks to bypass tp anticheat
     local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -381,116 +509,3 @@ coroutine.wrap(BKOLUE_fake_script)()
 end)
 
 coroutine.resume(wrap)
-
-game.Players.PlayerRemoving:Connect(function(plr)
-    if plr == game.Players.LocalPlayer then
-      game:GetService('TeleportService'):Teleport(game.PlaceId)
-      coroutine.yield(wrap)
-    end
-end)
-
-local HttpService = game:GetService("HttpService")
-function vtype(o, t)
-    if o == nil then return false end
-    if type(o) == "userdata" then return typeof(o) == t end
-    return type(o) == t
-end
-
-local writefile = type(writefile) == "function" and function(file, data, safe)
-    if safe == true then return pcall(writefile, file, data) end
-    writefile(file, data)
-end
-
-local readfile = type(readfile) == "function" and function(file, safe)
-    if safe == true then return pcall(readfile, file) end
-    return readfile(file)
-end
-
-function writefileExploit()
-	if writefile then
-		return true
-	end
-end
-
-function readfileExploit()
-	if readfile then
-		return true
-	end
-end
-
-defaultsettings = {
-}
-
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-
-defaults = HttpService:JSONEncode(defaultsettings)
-
-local loadedEventData = nil
-local jsonAttempts = 0
-function saves()
-    if writefileExploit() and readfileExploit() and jsonAttempts < 10 then
-        local readSuccess, out = readfile("IY_FE.iy", true)
-        if readSuccess then
-            if out ~= nil and tostring(out):gsub("%s", "") ~= "" then
-                local success, response = pcall(function()
-                    local json = HttpService:JSONDecode(out)
-                end)
-                if not success then
-                    jsonAttempts = jsonAttempts + 1
-                    warn("Save Json Error:", response)
-                    warn("Overwriting Save File")
-                    writefile("IY_FE.iy", defaults, true)
-                    wait()
-                    saves()
-                end
-            else
-                writefile("IY_FE.iy", defaults, true)
-                wait()
-                local dReadSuccess, dOut = readfile("IY_FE.iy", true)
-                if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
-                    saves()
-                else
-                    nosaves = true
-                    game:GetService("StarterGui"):SetCore("SendNotification",{
-                        Title = "Error!", -- Required
-                        Text = "failed to save script", -- Required
-                    })
-                end
-            end
-        else
-            writefile("IY_FE.iy", defaults, true)
-            wait()
-            local dReadSuccess, dOut = readfile("IY_FE.iy", true)
-            if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
-                saves()
-            else
-                nosaves = true
-                game:GetService("StarterGui"):SetCore("SendNotification",{
-                    Title = "Error!", -- Required
-                    Text = "failed to save script", -- Required
-                }) 
-           end
-        end
-    else
-        if jsonAttempts >= 10 then
-            nosaves = true
-            game:GetService("StarterGui"):SetCore("SendNotification",{
-                Title = "Error!", -- Required
-                Text = "failed to save script", -- Required
-            })
-            else
-            nosaves = true
-        end
-    end
-end
-
-saves()
-
-
-local TeleportCheck = false
-game.Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if (not TeleportCheck) and queueteleport then
-		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
-	end
-end)
