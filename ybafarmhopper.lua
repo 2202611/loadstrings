@@ -26,6 +26,8 @@ local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
 ---
 
+print("passed1")
+
 local items = {
     ["Mysterious Arrow"] = 0,
     ["Rokakaka"] = 0,
@@ -83,6 +85,7 @@ local maxLimits = {  -- Add to the list if I missed an item
     --["Blue Candy"] = 999,
 }
 
+print("passed2")
 
 --local TeleportCheck = false
 --game.Players.LocalPlayer.OnTeleport:Connect(function(State)
@@ -105,6 +108,7 @@ local waittime = 0
 while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") do
     task.wait(1)
     waittime += 1
+    print("looping loadscreen1..")
     if waittime >= 15 then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
@@ -121,6 +125,7 @@ end
 local waittime2 = 0
 while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
     task.wait(1)
+    print("looping loadscreen..")
     waittime2 += 1
     if waittime2 >= 15 then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
@@ -134,6 +139,8 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
         break
     end
 end
+
+print("passedloading")
 
 task.wait(1)
 
