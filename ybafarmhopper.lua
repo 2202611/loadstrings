@@ -1,5 +1,4 @@
 print("Loaded")
-queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
 local wrap = coroutine.create(function()
 local duration = 0.1
 local speed = 0.05
@@ -178,8 +177,9 @@ saves()
 
 
 local TeleportCheck = false
+queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
 game.Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if (not TeleportCheck) and queueteleport then
+	if (not TeleportCheck) and queueteleport and State == Enum.TeleportState.Started then
 		TeleportCheck = true
 		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
 	end
@@ -365,7 +365,7 @@ while boolean do
          --   print(#workspace.Item_Spawns.Items:GetChildren())
         --end
     end
-    if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 120 and hop == true then
+    if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 60 and hop == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
         local Server = Servers.data[math.random(1,#Servers.data)]
