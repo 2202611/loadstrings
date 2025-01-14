@@ -178,14 +178,14 @@ end
 saves()
 
 
-local TeleportCheck = false
-game.Players.LocalPlayer.OnTeleport:Connect(function(State)
-	if (not TeleportCheck) and queue_on_teleport and State == Enum.TeleportState.Started then
-		TeleportCheck = true
-        print("TP")
-		queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
-	end
-end)
+--local TeleportCheck = false
+--game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+	--if (not TeleportCheck) and queue_on_teleport and State == Enum.TeleportState.Started then
+--		TeleportCheck = true
+  --      print("TP")
+---		queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
+--	end
+--end)
 
 local _place,_id = game.PlaceId, game.JobId
 
@@ -203,6 +203,7 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") do
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
         local Server = Servers.data[math.random(1,#Servers.data)]
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
         break
     end
@@ -217,6 +218,7 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
         local Servers = ListServers()
         local Server = Servers.data[math.random(1,#Servers.data)]
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
         break
     end
 end
@@ -374,6 +376,7 @@ while boolean do
         local Servers = ListServers()
         local Server = Servers.data[math.random(1,#Servers.data)]
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
     end
            -- if v:FindFirstChild("PointLight") then
 			--for _,v in pairs(hrp.Parent:GetChildren()) do
