@@ -99,12 +99,14 @@ end
 
 function writefileExploit()
 	if writefile then
+        print("write file working")
 		return true
 	end
 end
 
 function readfileExploit()
 	if readfile then
+        print("read file working")
 		return true
 	end
 end
@@ -218,6 +220,8 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
         break
     end
 end
+
+task.wait(1)
 
 game.Players.LocalPlayer.PlayerStats.Prestige.Value = "0"
 
