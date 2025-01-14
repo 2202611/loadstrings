@@ -411,6 +411,8 @@ while boolean do
                             end
                             TextLabel.Text = "picking up and selling item.."
                             --task.wait(0.1)
+                            time += 1
+                            print(time)
 			                if not prompt then
                                 break
                             elseif prompt then
@@ -425,7 +427,6 @@ while boolean do
                                 end
                                 break
                             end
-                            time += 1
                         end
 						end
 						task.wait(0.01)
