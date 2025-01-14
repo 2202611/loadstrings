@@ -113,6 +113,9 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") do
         queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
         break
     end
+    if not game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") then
+        break
+    end
 end
 
 local waittime2 = 0
@@ -125,6 +128,9 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
         local Server = Servers.data[math.random(1,#Servers.data)]
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
         queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
+        break
+    end
+    if not game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") then
         break
     end
 end
@@ -246,8 +252,9 @@ end)
 function start()
 bv = Instance.new("BodyVelocity")
 bv.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-bv.Velocity = Vector3.new(0,-0.1,0)
+bv.Velocity = Vector3.new(0,-0.01,0)
 bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+boolean = true
 while boolean do
     task.wait(.01)
 	time += .01
