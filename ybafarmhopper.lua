@@ -1,5 +1,8 @@
 print("Loaded")
 local wrap = coroutine.create(function()
+
+print("entered wrap")
+
 local duration = 0.1
 local speed = 0.05
 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
@@ -79,103 +82,6 @@ local maxLimits = {  -- Add to the list if I missed an item
     --["Red Candy"] = 999,
     --["Blue Candy"] = 999,
 }
-
-local HttpService = game:GetService("HttpService")
-function vtype(o, t)
-    if o == nil then return false end
-    if type(o) == "userdata" then return typeof(o) == t end
-    return type(o) == t
-end
-
-local writefile = type(writefile) == "function" and function(file, data, safe)
-    if safe == true then return pcall(writefile, file, data) end
-    writefile(file, data)
-end
-
-local readfile = type(readfile) == "function" and function(file, safe)
-    if safe == true then return pcall(readfile, file) end
-    return readfile(file)
-end
-
-function writefileExploit()
-	if writefile then
-        print("write file working")
-		return true
-	end
-end
-
-function readfileExploit()
-	if readfile then
-        print("read file working")
-		return true
-	end
-end
-
-defaultsettings = {
-}
-
-defaults = HttpService:JSONEncode(defaultsettings)
-
-local loadedEventData = nil
-local jsonAttempts = 0
-function saves()
-    if writefileExploit() and readfileExploit() and jsonAttempts < 10 then
-        local readSuccess, out = readfile("IY_FE.iy", true)
-        if readSuccess then
-            if out ~= nil and tostring(out):gsub("%s", "") ~= "" then
-                local success, response = pcall(function()
-                    local json = HttpService:JSONDecode(out)
-                end)
-                if not success then
-                    jsonAttempts = jsonAttempts + 1
-                    warn("Save Json Error:", response)
-                    warn("Overwriting Save File")
-                    writefile("AUTOYBA.iy", defaults, true)
-                    wait()
-                    saves()
-                end
-            else
-                writefile("AUTOYBA.iy", defaults, true)
-                wait()
-                local dReadSuccess, dOut = readfile("AUTOYBA.iy", true)
-                if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
-                    saves()
-                else
-                    nosaves = true
-                    game:GetService("StarterGui"):SetCore("SendNotification",{
-                        Title = "Error!", -- Required
-                        Text = "failed to save script", -- Required
-                    })
-                end
-            end
-        else
-            writefile("AUTOYBA.iy", defaults, true)
-            wait()
-            local dReadSuccess, dOut = readfile("AUTOYBA.iy", true)
-            if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
-                saves()
-            else
-                nosaves = true
-                game:GetService("StarterGui"):SetCore("SendNotification",{
-                    Title = "Error!", -- Required
-                    Text = "failed to save script", -- Required
-                }) 
-           end
-        end
-    else
-        if jsonAttempts >= 10 then
-            nosaves = true
-            game:GetService("StarterGui"):SetCore("SendNotification",{
-                Title = "Error!", -- Required
-                Text = "failed to save script", -- Required
-            })
-            else
-            nosaves = true
-        end
-    end
-end
-
-saves()
 
 
 --local TeleportCheck = false
