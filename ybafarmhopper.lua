@@ -3,7 +3,7 @@ local wrap = coroutine.create(function()
 local duration = 0.1
 local speed = 0.05
 local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-local hop = false
+local hop = true
 
 task.spawn(function()
     while true do
@@ -361,10 +361,12 @@ while boolean do
        -- while #workspace.Item_Spawns.Items:GetChildren() == 0 do
             travelTo(workspace.Dialogues:GetChildren()[math.random(1,#workspace.Dialogues:GetChildren())].TalkBox.Position + Vector3.new(0,-50,0),true)
             task.wait(0.05)
+            time += 0.05
+            print(time)
          --   print(#workspace.Item_Spawns.Items:GetChildren())
         --end
     end
-    if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 190 and hop == true then
+    if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 120 and hop == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
         local Server = Servers.data[math.random(1,#Servers.data)]
@@ -415,9 +417,11 @@ while boolean do
                             elseif prompt then
                                 task.wait(0.1)
                             end
+                            time += 0.2
                         end
 						end
 						task.wait(0.01)
+                        time += 0.01
 					end
                     if v and v:FindFirstChild("ProximityPrompt") then
                         v:Destroy()
