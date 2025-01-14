@@ -203,8 +203,8 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") do
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
         local Servers = ListServers()
         local Server = Servers.data[math.random(1,#Servers.data)]
-        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+        queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
         break
     end
 end
