@@ -1,4 +1,5 @@
 print("Loaded")
+queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
 local wrap = coroutine.create(function()
 local duration = 0.1
 local speed = 0.05
@@ -112,8 +113,6 @@ end
 defaultsettings = {
 }
 
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-
 defaults = HttpService:JSONEncode(defaultsettings)
 
 local loadedEventData = nil
@@ -130,14 +129,14 @@ function saves()
                     jsonAttempts = jsonAttempts + 1
                     warn("Save Json Error:", response)
                     warn("Overwriting Save File")
-                    writefile("IY_FE.iy", defaults, true)
+                    writefile("AUTOYBA.iy", defaults, true)
                     wait()
                     saves()
                 end
             else
-                writefile("IY_FE.iy", defaults, true)
+                writefile("AUTOYBA.iy", defaults, true)
                 wait()
-                local dReadSuccess, dOut = readfile("IY_FE.iy", true)
+                local dReadSuccess, dOut = readfile("AUTOYBA.iy", true)
                 if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
                     saves()
                 else
@@ -149,9 +148,9 @@ function saves()
                 end
             end
         else
-            writefile("IY_FE.iy", defaults, true)
+            writefile("AUTOYBA.iy", defaults, true)
             wait()
-            local dReadSuccess, dOut = readfile("IY_FE.iy", true)
+            local dReadSuccess, dOut = readfile("AUTOYBA.iy", true)
             if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
                 saves()
             else
@@ -417,7 +416,7 @@ while boolean do
                             elseif prompt then
                                 task.wait(0.1)
                             end
-                            time += 0.2
+                            time += 1
                         end
 						end
 						task.wait(0.01)
