@@ -415,6 +415,10 @@ while boolean do
                                 break
                             elseif prompt then
                                 task.wait(0.1)
+                                if prompt then
+                                task.wait(0.5)
+                                end
+                                break
                             end
                             time += 1
                         end
