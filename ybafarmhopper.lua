@@ -416,7 +416,12 @@ while boolean do
                             elseif prompt then
                                 task.wait(0.1)
                                 if prompt then
-                                task.wait(0.5)
+                                for i = 1,5 do
+                                   task.wait(0.1)
+                                   if not prompt then
+                                    break
+                                   end
+                                end
                                 end
                                 break
                             end
