@@ -26,7 +26,7 @@ ChatInputBarConfiguration.Enabled = false
 UIS.InputBegan:Connect(function(input, gameProcessedEvent)
     if input.KeyCode == Enum.KeyCode.Slash then
         TextBox:CaptureFocus()
-        TextBox.Text = ""
+        TextBox.PlaceholderText = "Enter text here.."
     end
 end)
 
@@ -37,6 +37,6 @@ TextBox.FocusLost:Connect(function(enterPressed, inputThatCausedFocusLoss)
         local final = string.gsub(newmsg, "/", "")
 
         game:GetService("TextChatService").TextChannels:WaitForChild("RBXGeneral"):SendAsync("" .. final)
-        TextBox.Text = ""
+        TextBox.Text = "Sent"
     end
 end)
