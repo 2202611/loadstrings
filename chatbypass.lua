@@ -5,7 +5,7 @@ local ChatInputBarConfiguration = TextChatService:FindFirstChildOfClass("ChatInp
 local ScreenGui = Instance.new("ScreenGui")
 local TextBox = Instance.new("TextBox")
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 TextBox.Parent = ScreenGui
