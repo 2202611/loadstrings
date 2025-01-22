@@ -7,6 +7,7 @@ local TextBox = Instance.new("TextBox")
 
 ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
 
 TextBox.Parent = ScreenGui
 TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
