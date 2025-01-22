@@ -35,8 +35,9 @@ TextBox.FocusLost:Connect(function(enterPressed, inputThatCausedFocusLoss)
         local filtered = TextBox.Text:gsub(".", "%1>"):sub(1, -2)
         local newmsg = string.gsub(filtered, "%s", "")
         local final = string.gsub(newmsg, "/", "")
+        local filtered_single = final:gsub(">>", ">")
 
-        game:GetService("TextChatService").TextChannels:WaitForChild("RBXGeneral"):SendAsync("" .. final)
+        game:GetService("TextChatService").TextChannels:WaitForChild("RBXGeneral"):SendAsync("" .. filtered_single)
         TextBox.Text = "Sent"
     end
 end)
