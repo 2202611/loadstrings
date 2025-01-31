@@ -317,8 +317,8 @@ while boolean do
                         if (item.Position - plr.Position).Magnitude > 15 then
 						travelTo(item.Position + Vector3.new(0,-7.2,0),true)
                         else
-                            for i = 1,10 do
-                            task.wait(0.1)
+                            for i = 1,5 do
+                            task.wait(0.2)
                             if (item.Position - plr.Position).Magnitude < 15 then
                                 break
                             end
@@ -340,10 +340,10 @@ while boolean do
 			                if not prompt then
                                 break
                             elseif prompt then
-                                task.wait(0.1)
+                                task.wait(0.2)
                                 if prompt then
                                 for i = 1,0.7 do
-                                   task.wait(0.1)
+                                   task.wait(0.2)
                                    if not prompt then
                                     break
                                    end
