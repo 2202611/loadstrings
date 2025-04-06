@@ -1,7 +1,6 @@
-print("Loaded")
 local wrap = coroutine.create(function()
 
-print("entered wrap")
+print("loaded")
 
 local duration = 0.1
 local speed = 0.05
@@ -17,8 +16,6 @@ local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
 ---
-
-print("passed1")
 
 local items = {
     ["Mysterious Arrow"] = 0,
@@ -49,7 +46,7 @@ local items = {
     --["Blue Candy"] = 0,
 }
 
-local maxLimits = {  -- Add to the list if I missed an item
+local maxLimits = { 
     ["Mysterious Arrow"] = 25,
     ["Rokakaka"] = 25,
     ["Gold Coin"] = 45,
@@ -77,17 +74,6 @@ local maxLimits = {  -- Add to the list if I missed an item
     --["Blue Candy"] = 999,
 }
 
-print("passed2")
-
---local TeleportCheck = false
---game.Players.LocalPlayer.OnTeleport:Connect(function(State)
-	--if (not TeleportCheck) and queue_on_teleport and State == Enum.TeleportState.Started then
---		TeleportCheck = true
-  --      print("TP")
----		queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
---	end
---end)
-
 local _place,_id = game.PlaceId, game.JobId
 
 local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=10"
@@ -95,7 +81,7 @@ function ListServers(cursor)
    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
    return Http:JSONDecode(Raw)
 end
-
+		
 local waittime = 0
 while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen1") do
     task.wait(1)
@@ -117,7 +103,7 @@ end
 local waittime2 = 0
 while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
     task.wait(1)
-    print("looping loadscreen..")
+    print("looping loadscreen2..")
     waittime2 += 1
     if waittime2 >= 15 then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
@@ -132,7 +118,7 @@ while game.Players.LocalPlayer.PlayerGui:FindFirstChild("LoadingScreen") do
     end
 end
 
-print("passedloading")
+print("passed loading")
 
 task.wait(1)
 
@@ -280,7 +266,6 @@ while boolean do
             task.wait(0.05)
             time += 0.05
             print(time)
-         --   print(#workspace.Item_Spawns.Items:GetChildren())
         --end
     end
     if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 60 and hop == true then
@@ -290,13 +275,7 @@ while boolean do
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
         queue_on_teleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/2202611/loadstrings/refs/heads/main/ybafarmhopper.lua'))()")
     end
-           -- if v:FindFirstChild("PointLight") then
-			--for _,v in pairs(hrp.Parent:GetChildren()) do
-             --   if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
-            --        v.Anchored = true
-            --    end
-          --  end
-            --hrp.Anchored = false
+					
             for _, v in pairs(game.Workspace.Item_Spawns.Items:GetChildren()) do
 				local item = v:FindFirstChild("MeshPart")
                 if not item then
@@ -366,21 +345,13 @@ while boolean do
             busy = false
             end
     end
---end
 end
 task.spawn(function()
 start()
 end)
 
--- Gui to Lua
--- Version: 3.3
-
--- Instances:
-
 local toggle = Instance.new("ScreenGui")
 local TextButton5 = Instance.new("TextButton")
-
---Properties:
 
 toggle.Name = "toggle"
 toggle.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -398,9 +369,8 @@ TextButton5.Text = "ON"
 TextButton5.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton5.TextSize = 14.000
 
--- Scripts:
 local toggled = true
-local function BKOLUE_fake_script() -- TextButton.LocalScript 
+local function BKOLUE_fake_script() 
 	local script = Instance.new('LocalScript', TextButton5)
 	
 	script.Parent.MouseButton1Down:Connect(function()
