@@ -203,7 +203,7 @@ local wrap = coroutine.create(function()
                     workspace.Locations["The Tallest Peak"]:Destroy()
                 end
                 local rng = math.random(1,#workspace.Locations:GetChildren())
-                travelTo(workspace.Locations[rng].Position + Vector3.new(0,-10,0), true)
+                travelTo(workspace.Locations:GetChildren()[rng].Position + Vector3.new(0,-10,0), true)
             end
             if busy then continue end
             busy = true
