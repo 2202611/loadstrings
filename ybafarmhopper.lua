@@ -199,7 +199,11 @@ local wrap = coroutine.create(function()
             task.wait(.015 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
             time += .015
             if #workspace.Item_Spawns.Items:GetChildren() == 0 then
-                travelTo(workspace.Spawns.NewPlayerSpawn.Position + Vector3.new(0,-10,0), true)
+                if workspace.Locations:FindFirstChild("The Tallest Peak") then
+                    workspace.Locations["The Tallest Peak"]:Destroy()
+                end
+                local rng = math.random(1,#workspace.Locations:GetChildren())
+                travelTo(workspace.Locations[rng].Position + Vector3.new(0,-10,0), true)
             end
             if busy then continue end
             busy = true
