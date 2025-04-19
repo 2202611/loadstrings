@@ -193,10 +193,10 @@ local wrap = coroutine.create(function()
         bv = Instance.new("BodyVelocity")
         bv.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
         bv.Velocity = Vector3.new(0,-0.01,0)
-        bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+        bv.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 
         while boolean do
-            task.wait(.025 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
+            task.wait(.01 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
             time += .01
             if #workspace.Item_Spawns.Items:GetChildren() == 0 then
                 travelTo(workspace.Spawns.NewPlayerSpawn.Position + Vector3.new(0,-10,0), true)
@@ -225,7 +225,7 @@ local wrap = coroutine.create(function()
                         proxPrompt.HoldDuration = duration
                         while (item.Position - hrp.Position).Magnitude > 10 do
                             travelTo(item.Position + Vector3.new(0,-8,0), true)
-                            task.wait(0.015 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
+                            task.wait(0.01 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
                         end
                         task.wait(0.18 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
                         fireproximityprompt(proxPrompt, 1)
