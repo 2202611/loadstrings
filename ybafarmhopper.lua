@@ -196,8 +196,8 @@ local wrap = coroutine.create(function()
         bv.Parent = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
 
         while boolean do
-            task.wait(.02 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
-            time += .02
+            task.wait(.015 * (1 + game.Players.LocalPlayer:GetNetworkPing()))
+            time += .015
             if #workspace.Item_Spawns.Items:GetChildren() == 0 then
                 travelTo(workspace.Spawns.NewPlayerSpawn.Position + Vector3.new(0,-10,0), true)
             end
@@ -205,10 +205,18 @@ local wrap = coroutine.create(function()
             busy = true
             task.delay(3, function() busy = false end)
 
+            local hum = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+            if hum then
+                if hum.Health <= 0 then
+                    repeat task.wait(0.2) until game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health >= 1
+                end
+            end
+
             TextLabel.Text = "ITEMS SPAWNED: "..#workspace.Item_Spawns.Items:GetChildren()
             if #workspace.Item_Spawns.Items:GetChildren() == 0 and time >= 60 and hop then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
                 hopServers()
+                boolean = false
             end
 
             for _, v in pairs(workspace.Item_Spawns.Items:GetChildren()) do
@@ -241,6 +249,7 @@ local wrap = coroutine.create(function()
                     end
                 end
             end
+                busy = false
         end
     end
 
